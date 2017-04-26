@@ -3,13 +3,12 @@ import java.io.IOException;
 public class Aplicacao {
 
 	public static void main(String[] args) {
-		ListaDeDoadores lista;
-				
+		ListaDeDoadoresService l;
+		Doador d = new Doador();
+		
 		try {
-			lista = new ListaDeDoadores("src/JSON_Doadores.txt");
-			lista.criarLista();
-			System.out.println();
-			lista.salvarLista();
+			l = new ListaDeDoadoresService();
+			l.getLista().criarLista();
 			System.out.println();
 		} catch (IOException e) {
 			System.out.println("Erro!");

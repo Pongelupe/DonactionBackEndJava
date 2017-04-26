@@ -1,13 +1,15 @@
 
 public class Doador {
+	private Integer id;
 	private String nome, email, senha, cidade, tipoSanguineo;
 	private Boolean apto;
 
 	Doador() {
-		this("John Doe", "shulambs@shulambs.com", "qwerty", "Shulambs", "O+", true);
+		this(0, "John Doe", "shulambs@shulambs.com", "qwerty", "Shulambs", "O+", true);
 	};
 
-	Doador(String nome, String email, String senha, String cidade, String tipoSanguineo, Boolean apto) {
+	Doador(Integer id, String nome, String email, String senha, String cidade, String tipoSanguineo, Boolean apto) {
+		this.setId(id);
 		this.setNome(nome);
 		this.setEmail(email);
 		this.setSenha(senha);
@@ -16,6 +18,14 @@ public class Doador {
 		this.setApto(apto);
 	};
 	
+	public Integer getId() {
+		return id;
+	};
+
+	public void setId(Integer id) {
+		this.id = id;
+	};
+
 	public String getNome() {
 		return nome;
 	};

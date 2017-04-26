@@ -13,12 +13,14 @@ public class ListaDeDoadores {
 	private Doador doador;
 	private Arquivo arquivo;
 	private BufferedReader buffReader;
-	private static Gson gson = new Gson();
+	private Integer indexDoador;
+	public static Gson gson = new Gson();
 
 	ListaDeDoadores(String caminhoArquivo) throws IOException {
-		setLista(new LinkedList<>());
 		arquivo = new Arquivo(caminhoArquivo);
+		setLista(new LinkedList<>());
 		setBuffReader(arquivo.abrirArquivo());
+		setIndexDoador(-1);
 	}
 
 	public List<Doador> criarLista() throws IOException {
@@ -44,30 +46,35 @@ public class ListaDeDoadores {
 	}
 
 	public Doador pesquisarDoador(String emailInformado, String senhaInformada) {
-		Integer indexDoador = -1;
 		Integer i = 0;
-		if (!getLista().isEmpty() && checarValidadeDados(emailInformado, senhaInformada)) {
-			while (indexDoador == -1 && i < getLista().size()) {
+		setIndexDoador(-1);
+		if (!getLista().isEmpty() && dadosSaoValidos(emailInformado, senhaInformada)) {
+			while (indexDoador.equals(-1) && i < getLista().size()) {
 				String emailCadastrado = getLista().get(i).getEmail();
 				String senhaCadastrada = getLista().get(i).getSenha();
-				indexDoador = compararDadosInformados(emailInformado, emailCadastrado, senhaInformada, senhaCadastrada,
-						i);
+				setIndexDoador(dadosSaoIguais(emailInformado, emailCadastrado, senhaInformada, senhaCadastrada,i));
 				i++;
 			}
 		}
-		if (indexDoador.equals(-1))
+		if (getIndexDoador().equals(-1))
 			return null;
-		return getLista().get(indexDoador);
+		return getLista().get(getIndexDoador());
 	}
 
-	private Boolean checarValidadeDados(String emailInformado, String senhaInformada) {
+	public Doador removerDoador(String emailInformado, String senhaInformada) {
+		if (pesquisarDoador(emailInformado, senhaInformada) == null)
+			return null;
+		return getLista().remove(getIndexDoador().intValue());
+	}
+	
+	private Boolean dadosSaoValidos(String emailInformado, String senhaInformada) {
 		Boolean dadosSaoValidos = true;
 		if (Objects.equals(emailInformado, "") || Objects.equals(senhaInformada, ""))
 			dadosSaoValidos = false;
 		return dadosSaoValidos;
 	}
 
-	private Integer compararDadosInformados(String emailInformado, String emailCadastrado, String senhaInformada,
+	private Integer dadosSaoIguais(String emailInformado, String emailCadastrado, String senhaInformada,
 			String senhaCadastrada, Integer i) {
 		if (emailInformado.equalsIgnoreCase(emailCadastrado) && Objects.equals(senhaInformada, senhaCadastrada))
 			return i;
@@ -98,4 +105,15 @@ public class ListaDeDoadores {
 		this.lista = lista;
 	}
 
+	
+	public Integer getIndexDoador() {
+		return indexDoador;
+	}
+
+	
+public void setIndexDoador(Integer indexDoador) {
+		this.indexDoador = indexDoador;
+	}
+
+	
 }

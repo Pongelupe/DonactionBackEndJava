@@ -1,1 +1,1 @@
-[{"nome":"Maíra Ribeiro","email":"ribeirofreiremaira@gmail.com", "senha":"54de5f", "cidade":"Belo Horizonte","tipoSanguineo":"AB-","apto":true},{"nome":"Eric Ribeiro","email":"ericribeiro@outlook.com.br", "senha":"1av077", "cidade":"Belo Horizonte","tipoSanguineo":"O+","apto":true}]
+[{"id":0,"nome":"Maíra Ribeiro","email":"ribeirofreiremaira@gmail.com", "senha":"54de5f", "cidade":"Belo Horizonte","tipoSanguineo":"AB-","apto":true},{"id":1,"nome":"Eric Ribeiro","email":"ericribeiro@outlook.com.br", "senha":"1av077", "cidade":"Belo Horizonte","tipoSanguineo":"O+","apto":true}]

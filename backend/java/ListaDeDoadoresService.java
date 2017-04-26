@@ -11,24 +11,29 @@ public final class ListaDeDoadoresService {
 		setLista(new ListaDeDoadores("src/JSON_Doadores.txt"));
 	}
 
-	public boolean adicionarDoador(Request request) throws IOException {
+	public Boolean adicionarDoador(Request request) throws IOException {
 		Query q = request.getQuery();
+		Integer id = getLista().getLista().indexOf((getLista().getLista().size()) + 1);
 		String nome = q.get("nome");
 		String email = q.get("email");
 		String senha = q.get("senha");
 		String cidade = q.get("cidade");
 		String tipoSanguineo = q.get("tipoSanguineo");
 		Boolean podeDoar = Boolean.parseBoolean(q.get("podeDoar"));
-		return getLista().adicionarDoador(new Doador(nome, email, senha, cidade, tipoSanguineo, podeDoar));
+		return getLista().adicionarDoador(new Doador(id, nome, email, senha, cidade, tipoSanguineo, podeDoar));
 	}
 	
-	public Doador logarConta(Request request) {
-		Query q = request.getQuery();
-		String emailInformado = q.get("email");
-		String senhaInformada = q.get("senha");
-		return getLista().pesquisarDoador(emailInformado, senhaInformada);
+	public String logarConta(Request request) {
+		Query query = request.getQuery();
+		String emailInformado = query.get("email");
+		String senhaInformada = query.get("senha");
+		return ListaDeDoadores.gson.toJson(getLista().pesquisarDoador(emailInformado, senhaInformada), Doador.class);
 	}
 
+//	public Boolean alterarDadosCadastrados(Request request) {
+//		
+//	}
+	
 	public ListaDeDoadores getLista() {
 		return lista;
 	}
