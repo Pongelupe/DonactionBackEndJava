@@ -4,7 +4,7 @@ public class Aplicacao {
 
 	public static void main(String[] args) {
 		ListaDeDoadoresService l;
-		Doador d = new Doador();
+		//Doador d = new Doador();
 		
 		try {
 			l = new ListaDeDoadoresService();

@@ -6,12 +6,13 @@ import org.simpleframework.http.Request;
 public final class ListaDeDoadoresService {
 
 	private ListaDeDoadores lista;
-	
+
 	public ListaDeDoadoresService() throws IOException {
 		setLista(new ListaDeDoadores("src/JSON_Doadores.txt"));
 	}
 
-	public Boolean adicionarDoador(Request request) throws IOException {
+	public String adicionarDoador(Request request) throws IOException {
+		Doador d = null;
 		Query q = request.getQuery();
 		Integer id = getLista().getLista().indexOf((getLista().getLista().size()) + 1);
 		String nome = q.get("nome");
@@ -20,9 +21,11 @@ public final class ListaDeDoadoresService {
 		String cidade = q.get("cidade");
 		String tipoSanguineo = q.get("tipoSanguineo");
 		Boolean podeDoar = Boolean.parseBoolean(q.get("podeDoar"));
-		return getLista().adicionarDoador(new Doador(id, nome, email, senha, cidade, tipoSanguineo, podeDoar));
+		d = new Doador(id, nome, email, senha, cidade, tipoSanguineo, podeDoar);
+		getLista().adicionarDoador(d);
+		return d.toString();
 	}
-	
+
 	public String logarConta(Request request) {
 		Query query = request.getQuery();
 		String emailInformado = query.get("email");
@@ -30,14 +33,17 @@ public final class ListaDeDoadoresService {
 		return ListaDeDoadores.gson.toJson(getLista().pesquisarDoador(emailInformado, senhaInformada), Doador.class);
 	}
 
-	public Boolean alterarDadosCadastrados(Request request) throws IOException {
+	public String alterarDadosCadastrados(Request request) throws IOException {
 		Query query = request.getQuery();
 		Integer id = query.getInteger("id");
 		String email = query.get("email");
 		String cidade = query.get("cidade");
-		return getLista().alterarDadosDoador(id, email, cidade);
+		if (getLista().alterarDadosDoador(id, email, cidade)) {
+			return "Dados alterados com sucesso!";
+		} else
+			return "Doador não cadastrado!";
 	}
-	
+
 	public ListaDeDoadores getLista() {
 		return lista;
 	}

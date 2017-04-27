@@ -17,7 +17,7 @@ public class Doador {
 		this.setTipoSanguineo(tipoSanguineo);
 		this.setApto(apto);
 	};
-	
+
 	public Integer getId() {
 		return id;
 	};
@@ -72,6 +72,12 @@ public class Doador {
 
 	public void setApto(Boolean apto) {
 		this.apto = apto;
+	}
+
+	@Override
+	public String toString() {
+		return "Doador: " + id + ", nome: " + nome + ", email: " + email + ", senha: " + senha + ", cidade:" + cidade
+				+ ", tipo Sanguineo: " + tipoSanguineo + ", pode doar: " + apto;
 	};
 
 }
