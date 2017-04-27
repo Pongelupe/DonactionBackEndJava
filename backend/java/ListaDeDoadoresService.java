@@ -30,9 +30,13 @@ public final class ListaDeDoadoresService {
 		return ListaDeDoadores.gson.toJson(getLista().pesquisarDoador(emailInformado, senhaInformada), Doador.class);
 	}
 
-//	public Boolean alterarDadosCadastrados(Request request) {
-//		
-//	}
+	public Boolean alterarDadosCadastrados(Request request) throws IOException {
+		Query query = request.getQuery();
+		Integer id = query.getInteger("id");
+		String email = query.get("email");
+		String cidade = query.get("cidade");
+		return getLista().alterarDadosDoador(id, email, cidade);
+	}
 	
 	public ListaDeDoadores getLista() {
 		return lista;

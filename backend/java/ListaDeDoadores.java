@@ -67,6 +67,18 @@ public class ListaDeDoadores {
 		return getLista().remove(getIndexDoador().intValue());
 	}
 	
+	public Boolean alterarDadosDoador(Integer id, String email, String cidade) throws IOException {
+		Boolean dadosForamAlterados = false;
+		if (id < getLista().size()) {
+			Doador doador = getLista().get(id);
+			doador.setEmail(email);
+			doador.setCidade(cidade);
+			dadosForamAlterados = true;
+		}
+		salvarLista();
+		return dadosForamAlterados;
+	}
+	
 	private Boolean dadosSaoValidos(String emailInformado, String senhaInformada) {
 		Boolean dadosSaoValidos = true;
 		if (Objects.equals(emailInformado, "") || Objects.equals(senhaInformada, ""))
@@ -105,13 +117,11 @@ public class ListaDeDoadores {
 		this.lista = lista;
 	}
 
-	
 	public Integer getIndexDoador() {
 		return indexDoador;
 	}
 
-	
-public void setIndexDoador(Integer indexDoador) {
+	public void setIndexDoador(Integer indexDoador) {
 		this.indexDoador = indexDoador;
 	}
 
