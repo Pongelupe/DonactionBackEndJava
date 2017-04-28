@@ -1,1 +1,1 @@
-[{"id":0,"nome":"Eric","email":"EricRibeiro@Email.com","senha":"1234","cidade":"Belo Horizonte","tipoSanguineo":"O+","apto":false}]
+[{"id":0,"nome":"Eric","email":"ribeiro@eric","senha":"1234","cidade":"São Paulo","tipoSanguineo":"O+","apto":false},{"id":1,"nome":"Maira","email":"ribeiro@freire","senha":"12345","cidade":"Rio de Janeiro","tipoSanguineo":"O ","apto":true}]

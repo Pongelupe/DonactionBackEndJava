@@ -2,6 +2,8 @@ import java.io.PrintStream;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.simpleframework.http.Request;
 import org.simpleframework.http.Response;
 import org.simpleframework.http.Status;
@@ -19,7 +21,6 @@ public class URLMetodo implements Container {
 		try {
 			String path = request.getPath().getPath();
 			String method = request.getMethod();
-			String jsonUsuario;
 
 			if (path.startsWith("/adicionarDoador") && "POST".equals(method)) {
 				if (doadoresService.adicionarDoador(request))
@@ -28,9 +29,9 @@ public class URLMetodo implements Container {
 					this.enviaResposta(Status.EXPECTATION_FAILED, response);
 
 			} else if (path.startsWith("/logarConta") && "POST".equals(method)) {
-				jsonUsuario = doadoresService.logarConta(request);
-				if (jsonUsuario != null)
-					this.enviaResposta(Status.OK, response);
+				String dadosDoUsuario = doadoresService.logarConta(request);
+				if (dadosDoUsuario != null)
+					this.enviaResposta(Status.OK, response, toJSON(dadosDoUsuario));
 				else
 					this.enviaResposta(Status.EXPECTATION_FAILED, response);
 
@@ -56,7 +57,24 @@ public class URLMetodo implements Container {
 		response.setStatus(status);
 		body.close();
 	}
+	
+	private void enviaResposta(Status status, Response response, JSONObject json) throws Exception {
+		PrintStream body = response.getPrintStream();
+		long time = System.currentTimeMillis();
+		response.setValue("Content-Type", "application/json");
+		response.setValue("Server", "Controle de Login");
+		response.setDate("Date", time);
+		response.setDate("Last-Modified", time);
+		response.setStatus(status);
+		body.print(json);
+		body.close();
+	}
 
+	public JSONObject toJSON(String dadosDoUsuario) throws JSONException {
+		JSONObject json = new JSONObject(dadosDoUsuario);
+		return json;
+	}
+	
 	public static void main(String[] list) throws Exception {
 
 		doadoresService = new ListaDeDoadoresService();

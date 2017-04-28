@@ -2,58 +2,57 @@ function userFirstSession() {
     classActive();
     var userData = JSON.parse(localStorage.getItem("userData"));
     document.getElementById("userAvatar").src = "https://api.adorable.io/avatars/180/" + userData.id + ".png";
-    document.getElementById("userName").innerHTML = userData.userName;
-    document.getElementById("userBlood").innerHTML = userData.userBlood;
+    document.getElementById("userName").innerHTML = userData.nome;
+    document.getElementById("userBlood").innerHTML = userData.tipoSanguineo;
 }
 
 function userSession() {
     classActive();
     var userData = JSON.parse(localStorage.getItem("userData"));
     document.getElementById("userAvatar").src = "https://api.adorable.io/avatars/180/" + userData.id + ".png";
-    document.getElementById("userName").innerHTML = userData.userName;
-    document.getElementById("userBlood").innerHTML = userData.userBlood;
-    document.getElementById("email").value = userData.userEmail;
-    document.getElementById("city").value = userData.userLocation;
+    document.getElementById("userName").innerHTML = userData.nome;
+    document.getElementById("userBlood").innerHTML = userData.tipoSanguineo;
+    document.getElementById("email").value = userData.email;
+    document.getElementById("city").value = userData.cidade;
 }
 
 function clearField(inputId) {
     document.getElementById(inputId).value = "";
 }
 
-function updateData() {
+$("#updateData").submit(function(event){
     event.preventDefault();
-    var userData = JSON.parse(localStorage.getItem("userData"));
-    var newEmail = document.getElementById("email").value;
-    var newLocation = document.getElementById("city").value;
-    var sendData = {
-        "id": userData.id,
-        "userName": userData.userName,
-        "userEmail": newEmail,
-        "userLocation": newLocation,
-        "userBlood": userData.userBlood
-    };
-    sendData = JSON.stringify(sendData);
+    var porta = 8080;
+    var formData = SerializedUserData();
     $.ajax({
-        url: "https://api.myjson.com/bins/" + userData.id,
-        type: "PUT",
-        data: sendData,
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
+        type: "POST",
+        url: $(this).attr('action') + ":" + porta + "/alterarDadosCadastrados",
+        data: formData,
         success: function(data, textStatus, jqXHR) {
-            swal("Dados Alterados", "As alterações foram realizadas com sucesso", "success")
-            localStorage.setItem("userData", sendData)
+            sweetAlert("Dados Alterados com Sucesso!","","success");      
+        },
+        error: function(xhr, textStatus, errorThrown) {
+            sweetAlert("Login inválido!","","error");
         }
     });
+});
+
+function SerializedUserData() {
+    var userData = JSON.parse(localStorage.getItem("userData"));
+    var id = userData.id;
+    var userEmail = document.getElementById('email').value;
+    var userLocation = document.getElementById('city').value;
+    return "email=" + userEmail + "&cidade=" + userLocation + "&id=" + id;
 }
 
 function notBlank(inputId) {
     var userData = JSON.parse(localStorage.getItem("userData"));
     var inputValue = document.getElementById(inputId).value;
     if (inputValue == "" && inputId == "email") {
-        document.getElementById(inputId).value = userData.userEmail
+        document.getElementById(inputId).value = userData.email
     }
     if (inputValue == "" && inputId == "city") {
-        document.getElementById(inputId).value = userData.userLocation
+        document.getElementById(inputId).value = userData.cidade
     }
 }
 

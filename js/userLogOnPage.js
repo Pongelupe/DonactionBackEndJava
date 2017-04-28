@@ -1,15 +1,15 @@
 var canDonate = ["", "", "", ""];
 
 $("#myForm").submit(function(event){
-        event.preventDefault();
-        if(!validateForm())
-            sweetAlert("Formulário inválido!", "Preencha todos os campos!", "error");
-        else {
-
+    event.preventDefault();
+    if(!validateForm())
+        sweetAlert("Formulário inválido!", "Preencha todos os campos!", "error");
+    else {
         var formData = SerializedUserData();
+        var porta = 8080;
         $.ajax({
             type: "POST",
-            url: $(this).attr('action'),
+            url: $(this).attr('action') + ":" + porta + "/adicionarDoador",
             data: formData,
             success: function(data, textStatus, jqXHR) {
                 swal({

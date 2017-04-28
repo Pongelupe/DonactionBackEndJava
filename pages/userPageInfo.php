@@ -16,7 +16,7 @@
         <!-- Include of the navBar -->
         <?php include 'userPageSideBar.php';?>
         <div class="container-fluid">
-            <form class="register-form">
+            <form class="register-form" action="http://127.0.0.1" method="POST" id="updateData">
                 <div class="row row-centered">
                     <div class="col-lg-12 col-centered">
                         <picture>
@@ -60,7 +60,7 @@
                 <hr>
                     <div class="row row-centered">
                         <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 col-centered">
-                            <button class="btn btn-default logbutton" onclick="updateData()">
+                            <button class="btn btn-default logbutton">
                                 Alterar
                             </button>
                         </div>

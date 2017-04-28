@@ -25,9 +25,13 @@ public final class ListaDeDoadoresService {
 
 	public String logarConta(Request request) {
 		Query query = request.getQuery();
+		System.out.println("QUERY: " + query);
 		String emailInformado = query.get("email");
 		String senhaInformada = query.get("senha");
-		return ListaDeDoadores.gson.toJson(getLista().pesquisarDoador(emailInformado, senhaInformada), Doador.class);
+		Doador dadosDoUsuario = getLista().pesquisarDoador(emailInformado, senhaInformada);
+		if (dadosDoUsuario != null)
+			return ListaDeDoadores.gson.toJson(dadosDoUsuario, Doador.class);
+		return null;
 	}
 
 	public Boolean alterarDadosCadastrados(Request request) throws IOException {
