@@ -1,44 +1,24 @@
 <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-    <!DOCTYPE html>
-    <html>
-        <head>
-            <meta charset="utf-8">
-                <meta content="IE=edge" http-equiv="X-UA-Compatible">
-                    <meta content="width=device-width, initial-scale=1" name="viewport">
-                        <meta content="" name="description">
-                            <meta content="" name="author">
-                                <title>
-                                    Página do Doador
-                                </title>
-                                <!-- Form's CSS -->
-                                <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-                                    <link href="../css/userPageLogOn.css" rel="stylesheet" type="text/css">
-                                        <link href="../vendor/sweetalert/css/sweetalert.css" rel="stylesheet" type="text/css">
-                                            <!-- jQuery -->
-                                            <script src="../vendor/jquery/jquery.min.js">
-                                            </script>
-                                            <!-- Main's JavaScript -->
-                                            <script src="../js/userLogOnPage.js">
-                                            </script>
-                                            <!-- FaceBook's API JavaScript -->
-                                            <script src="../js/facebookLoginAPI.js">
-                                            </script>
-                                            <!-- SweetAlert's JavaScript -->
-                                            <script src="../vendor/sweetalert/js/sweetalert.min.js">
-                                            </script>
-                                        </link>
-                                    </link>
-                                </link>
-                            </meta>
-                        </meta>
-                    </meta>
-                </meta>
-            </meta>
-        </head>
-        <body>
-            <!-- script to allow the usage of Donaction Facebook's app-->
-            <script>
-                window.fbAsyncInit = function() {
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <title>Página do Doador</title>
+
+        <!-- Form's CSS --> 
+        <link rel="stylesheet" type="text/css" href="../vendor/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../css/userPageLogOn.css">
+        <link rel="stylesheet" type="text/css" href="../vendor/sweetalert/css/sweetalert.css">
+
+    </head>
+    <body>
+    <!-- script to allow the usage of Donaction Facebook's app-->
+    <script>
+            window.fbAsyncInit = function() {
     FB.init({
       appId      : '1722251574732793',
       xfbml      : true,
@@ -54,181 +34,133 @@
      js.src = "//connect.facebook.net/en_US/sdk.js";
      fjs.parentNode.insertBefore(js, fjs);
    }(document, 'script', 'facebook-jssdk'));
-            </script>
-            <header class="ccheader">
-                <h1>
-                    Preencha com o seus dados
-                </h1>
-            </header>
-            <div class="wrapper">
-                <form class="ccform" action="http://127.0.0.1:8080/adicionarDoador" method="post">
-                    <div class="ccfield-prepend">
-                        <span class="ccform-addon">
-                            <i class="fa fa-user fa-2x">
-                            </i>
-                        </span>
-                        <input class="ccformfield" id="name" placeholder="Nome Completo" name="nome" type="text">
-                        </input>
+        </script>
+        <header class="ccheader">
+            <h1>Preencha com o seus dados</h1> 
+        </header>
+        <div class="wrapper">
+            <form class="ccform" id="myForm" action="http://127.0.0.1:8080/adicionarDoador" method="POST">
+
+                <div class="ccfield-prepend">
+                    <span class="ccform-addon"><i class="fa fa-user fa-2x"></i></span>
+                    <input class="ccformfield" type="text" id="name" name="nome" placeholder="Nome Completo">
+                </div>
+
+                <div class="ccfield-prepend">
+                    <span class="ccform-addon"><i class="fa fa-envelope fa-2x"></i></span>
+                    <input class="ccformfield" type="text" id="email" name="email" placeholder="Email">
+                </div>
+                <div class="ccfield-prepend">
+                        <span class="ccform-addon"><i class="fa fa-heart fa-2x"></i></span>
+                        <input class="ccformfield" id="password" placeholder="Senha" type="password">
                     </div>
-                    <div class="ccfield-prepend">
-                        <span class="ccform-addon">
-                            <i class="fa fa-envelope fa-2x">
-                            </i>
-                        </span>
-                        <input class="ccformfield" id="email" name="email" placeholder="Email" type="text">
-                        </input>
+                <div class="ccfield-prepend">
+                    <span class="ccform-addon"><i class="fa fa-map-marker fa-2x"></i></span>
+                    <input class="ccformfield" type="text" id="city" placeholder="Cidade">
+                </div>
+                <div class="ccfield-prepend">
+                    <span class="ccform-addon"><i class="fa fa-tint fa-2x"></i></span>
+                    <select class="ccformfield" id="bloody" title="Tipo Sanguíneo">
+                        <option>Tipo Sanguíneo</option>
+                        <option>A+</option>
+                        <option>A-</option>
+                        <option>AB+</option>
+                        <option>AB-</option>
+                        <option>B+</option>
+                        <option>B-</option>
+                        <option>O+</option>
+                        <option>O-</option>
+                    </select>
+                </div>
+                <div class="col-sm-offset-4 col-sm-10">
+                    <div>
+                        <!-- <buttom class="btn btn-default" onclick="login()" type="button">                                    Preencher com o Facebook
+                        </buttom> -->
+                        <a href="#"><img src="../img/formPage/conecte-face.png" height="8%" onclick="login()"></a>
                     </div>
-                    <div class="ccfield-prepend">
-                        <span class="ccform-addon">
-                            <i class="fa fa-map-marker fa-2x">
-                            </i>
-                        </span>
-                        <input class="ccformfield" id="city" name="cidade" placeholder="Cidade" type="text">
-                        </input>
-                    </div>
-                    <div class="ccfield-prepend">
-                        <span class="ccform-addon">
-                            <i class="fa fa-heart fa-2x">
-                            </i>
-                        </span>
-                        <input class="ccformfield" id="password" placeholder="Senha" name="senha" type="password">
-                        </input>
-                    </div>
-                    <div class="ccfield-prepend">
-                        <span class="ccform-addon">
-                            <i class="fa fa-tint fa-2x">
-                            </i>
-                        </span>
-                        <select class="ccformfield" id="bloody" name="tipoSanguineo" title="Tipo Sanguíneo">
-                            <option>
-                                Tipo Sanguíneo
-                            </option>
-                            <option>
-                                A +
-                            </option>
-                            <option>
-                                A -
-                            </option>
-                            <option>
-                                AB +
-                            </option>
-                            <option>
-                                AB -
-                            </option>
-                            <option>
-                                B +
-                            </option>
-                            <option>
-                                B -
-                            </option>
-                            <option>
-                                O +
-                            </option>
-                            <option>
-                                O -
-                            </option>
-                        </select>
-                    </div>
-                    <div class="col-sm-offset-4 col-sm-10">
-                        <div>
-                            <a href="#">
-                                <img height="8%" onclick="login()" src="../img/formPage/conecte-face.png"/>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="ccfield-prepend">
-                        <table class="table table-condensed">
-                            <thead>
-                                <tr>
-                                    <th>
-                                    </th>
-                                    <th>
-                                        Sim
-                                    </th>
-                                    <th>
-                                        Não
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        Pesa pelo menos 50kg?
+                </div>
+                <div class="ccfield-prepend">  
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr>
+                                <th> </th>
+                                <th>Sim</th>
+                                <th>Não</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Pesa pelo menos 50kg?</td>
+                                <div class="checkbox">
+                                    <td>      
+                                        <input type="checkbox" name="checkbox" onclick="checkbox_config(true,0,0)"/>
                                     </td>
+                                </div>
                                     <div class="checkbox">
-                                        <td>
-                                            <input name="checkbox" onclick="checkbox_config(true,0,0)" type="checkbox"/>
-                                        </td>
-                                    </div>
-                                    <div class="checkbox">
-                                        <td>
-                                            <input name="checkbox" onclick="checkbox_config(false,0,1)" type="checkbox"/>
-                                        </td>
-                                    </div>
+                                    <td>      
+                                        <input type="checkbox" name="checkbox" onclick="checkbox_config(false,0,1)"/>
+                                    </td>
+                                </div>
                                 </tr>
                                 <tr>
-                                    <td>
-                                        Já teve malária?
+                                <td>Já teve malária?</td>
+                                <div class="checkbox">
+                                    <td>      
+                                        <input type="checkbox" name="checkbox" onclick="checkbox_config(false,1,2)"/>
                                     </td>
+                                </div>
                                     <div class="checkbox">
-                                        <td>
-                                            <input name="checkbox" onclick="checkbox_config(false,1,2)" type="checkbox"/>
-                                        </td>
-                                    </div>
-                                    <div class="checkbox">
-                                        <td>
-                                            <input name="checkbox" onclick="checkbox_config(true,1,3)" type="checkbox"/>
-                                        </td>
-                                    </div>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        Utiliza drogas injetáveis?
+                                    <td>      
+                                        <input type="checkbox" name="checkbox" onclick="checkbox_config(true,1,3)"/>
                                     </td>
-                                    <div class="checkbox">
-                                        <td>
-                                            <input name="checkbox" onclick="checkbox_config(false,2,4)" type="checkbox"/>
-                                        </td>
-                                    </div>
-                                    <div class="checkbox">
-                                        <td>
-                                            <input name="checkbox" onclick="checkbox_config(true,2,5)" type="checkbox"/>
-                                        </td>
-                                    </div>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        Fez tatuagem nos útimos 6 meses?
+                                </div>
+                            </tr>
+                            <tr>
+                                <td>Utiliza drogas injetáveis?</td>
+                                <div class="checkbox">
+                                    <td>      
+                                        <input type="checkbox" name="checkbox" onclick="checkbox_config(false,2,4)"/>
                                     </td>
+                                </div>
                                     <div class="checkbox">
-                                        <td>
-                                            <input name="checkbox" onclick="checkbox_config(false,3,6)" type="checkbox"/>
-                                        </td>
-                                    </div>
+                                    <td>      
+                                        <input type="checkbox" name="checkbox" onclick="checkbox_config(true,2,5)"/>
+                                    </td>
+                                </div>
+                            </tr>
+                            <tr>
+                                <td>Fez tatuagem nos útimos 6 meses?</td>
+                                <div class="checkbox">
+                                    <td>      
+                                        <input type="checkbox" name="checkbox" onclick="checkbox_config(false,3,6)"/>
+                                    </td>
+                                </div>
                                     <div class="checkbox">
-                                        <td>
-                                            <input name="checkbox" onclick="checkbox_config(true,3,7)" type="checkbox"/>
-                                        </td>
-                                    </div>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <!-- Container -->
-                    <div class="row">
-                        <div class="col-lg-9 col-xs-6">
-                            <button class="ccbtn" onclick="history.go(-1);">
-                                Voltar
-                            </button>
-                        </div>
-                        <div class="col-lg-3 col-xs-6">
-                            <input class="ccbtn" type="submit" onclick="userInput();" value="Enviar">
-                            </input>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <!-- wrapper -->
-        </body>
-    </html>
-</link>
+                                    <td>      
+                                        <input type="checkbox" name="checkbox" onclick="checkbox_config(true,3,7)"/>
+                                    </td>
+                                </div>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div> <!-- Container -->
+
+                <div class="row">
+                     <div class="col-lg-9 col-xs-6">
+                        <button class="ccbtn" onclick="history.go(-1);">Voltar</button>
+                     </div>
+
+                     <div class="col-lg-3 col-xs-6">
+                        <input class="ccbtn" type="submit" value="Enviar">
+                     </div>
+                </div>
+            </form>
+        </div> <!-- wrapper -->
+
+        <!-- JavaScripts's Files -->
+        <script src="../vendor/jquery/jquery.min.js"></script>
+        <script src="../js/userLogOnPage.js"></script>
+        <script src="../js/facebookLoginAPI.js"></script>
+        <script src="../vendor/sweetalert/js/sweetalert.min.js"></script>
+    </body>
+</html>

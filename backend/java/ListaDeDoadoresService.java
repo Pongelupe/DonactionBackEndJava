@@ -11,19 +11,16 @@ public final class ListaDeDoadoresService {
 		setLista(new ListaDeDoadores("src/JSON_Doadores.txt"));
 	}
 
-	public String adicionarDoador(Request request) throws IOException {
-		Doador d = null;
-		Query q = request.getQuery();
-		Integer id = getLista().getLista().indexOf((getLista().getLista().size()) + 1);
-		String nome = q.get("nome");
-		String email = q.get("email");
-		String senha = q.get("senha");
-		String cidade = q.get("cidade");
-		String tipoSanguineo = q.get("tipoSanguineo");
-		Boolean podeDoar = Boolean.parseBoolean(q.get("podeDoar"));
-		d = new Doador(id, nome, email, senha, cidade, tipoSanguineo, podeDoar);
-		getLista().adicionarDoador(d);
-		return d.toString();
+	public Boolean adicionarDoador(Request request) throws IOException {
+		Query query = request.getQuery();
+		Integer id = getLista().getLista().size();
+		String nome = query.get("nome");
+		String email = query.get("email");
+		String senha = query.get("senha");
+		String cidade = query.get("cidade");
+		String tipoSanguineo = query.get("tipoSanguineo");
+		Boolean podeDoar = Boolean.parseBoolean(query.get("podeDoar"));
+		return getLista().adicionarDoador(new Doador(id, nome, email, senha, cidade, tipoSanguineo, podeDoar));
 	}
 
 	public String logarConta(Request request) {
@@ -33,15 +30,12 @@ public final class ListaDeDoadoresService {
 		return ListaDeDoadores.gson.toJson(getLista().pesquisarDoador(emailInformado, senhaInformada), Doador.class);
 	}
 
-	public String alterarDadosCadastrados(Request request) throws IOException {
+	public Boolean alterarDadosCadastrados(Request request) throws IOException {
 		Query query = request.getQuery();
 		Integer id = query.getInteger("id");
 		String email = query.get("email");
 		String cidade = query.get("cidade");
-		if (getLista().alterarDadosDoador(id, email, cidade)) {
-			return "Dados alterados com sucesso!";
-		} else
-			return "Doador não cadastrado!";
+		return getLista().alterarDadosDoador(id, email, cidade);
 	}
 
 	public ListaDeDoadores getLista() {

@@ -1,38 +1,21 @@
 var canDonate = ["", "", "", ""];
 
-function userInput() {
-        var userName = document.getElementById('name').value;
-        var userEmail = document.getElementById('email').value;
-        var userLocation = document.getElementById('city').value;
-        var userBlood = document.getElementById('bloody').value;
-        var userDonator = toDonate();
-        if(!validateForm()){
+$("#myForm").submit(function(event){
+        event.preventDefault();
+        if(!validateForm())
             sweetAlert("Formulário inválido!", "Preencha todos os campos!", "error");
-        }
-        else{
-        // Array's declaration and values assignement
-        var userData = {};
-        userData.id = "";
-        userData.userName = userName;
-        userData.userEmail = userEmail;
-        userData.userLocation = userLocation;
-        userData.userBlood = userBlood;
-        userData.canDonate = userDonator;
-        var sendData = JSON.stringify(userData);
+        else {
+
+        var formData = SerializedUserData();
         $.ajax({
-            url: "https://api.myjson.com/bins",
             type: "POST",
-            data: sendData,
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
+            url: $(this).attr('action'),
+            data: formData,
             success: function(data, textStatus, jqXHR) {
-                var userUri = data.uri;
-                userId = breakUri(userUri);
-                pushId(userData, userId);
                 swal({
                     html: true,
-                    title: "Senha de Acesso: " + userId,
-                    text: "Guarde essa senha para entrar na sua sessão",
+                    title: "Pronto!",
+                    text: "O cadastro foi realizado com sucesso.",
                     type: "success",
                     confirmButtonText: "Continuar",
                     closeOnConfirm: false,
@@ -42,24 +25,17 @@ function userInput() {
             }
         });
     }
-}
-// Function to break the URI and get the ID
-function breakUri(userUri) {
-    var splittedURL = userUri.split(/\/+/g);
-    var userId = splittedURL[splittedURL.length - 1];
-    return userId
-}
-//Function to update the object with the user's ID
-function pushId(userData, userId) {
-    userData.id = userId;
-    sendData = JSON.stringify(userData);
-    $.ajax({
-        url: "https://api.myjson.com/bins/" + userId,
-        type: "PUT",
-        data: sendData,
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-    });
+});
+
+function SerializedUserData() {
+    var userName = document.getElementById('name').value;
+    var userEmail = document.getElementById('email').value;
+    var userPwd = document.getElementById('password').value;
+    var userLocation = document.getElementById('city').value;
+    var userBlood = document.getElementById('bloody').value;
+    var userDonator = toDonate();
+    return "nome=" + userName + "&email=" + userEmail + "&senha=" + userPwd + "&cidade=" + userLocation 
+        + "&tipoSanguineo=" + userBlood + "&podeDoar=" + userDonator;
 }
 
 function checkbox_config(status, posicao, clicado) {
@@ -85,7 +61,7 @@ function toDonate() {
     }
     return result;
 }
-//Functions to valdiate the form
+
 function validateForm() {
     if (document.getElementsByTagName("input")[0].value == "" || document.getElementsByTagName("input")[1].value == "" || document.getElementsByTagName("input")[2].value == "" || document.getElementById('bloody').value =='Tipo Sanguíneo' || !validateCheckBox(7)) {
         return false;

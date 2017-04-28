@@ -1,9 +1,6 @@
-
+import java.io.PrintStream;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import org.simpleframework.http.Request;
 import org.simpleframework.http.Response;
@@ -20,26 +17,28 @@ public class URLMetodo implements Container {
 	@Override
 	public void handle(Request request, Response response) {
 		try {
-			// Recupera a URL e o método utilizado.
-
 			String path = request.getPath().getPath();
 			String method = request.getMethod();
-			String resposta;
-
-			// Verifica qual ação está sendo chamada
+			String jsonUsuario;
 
 			if (path.startsWith("/adicionarDoador") && "POST".equals(method)) {
-				resposta = doadoresService.adicionarDoador(request);
-				this.enviaResposta(Status.CREATED, response, resposta);
+				if (doadoresService.adicionarDoador(request))
+					this.enviaResposta(Status.CREATED, response);
+				else
+					this.enviaResposta(Status.EXPECTATION_FAILED, response);
 
 			} else if (path.startsWith("/logarConta") && "POST".equals(method)) {
-				resposta = doadoresService.logarConta(request);
-				this.enviaResposta(Status.OK, response, resposta);
+				jsonUsuario = doadoresService.logarConta(request);
+				if (jsonUsuario != null)
+					this.enviaResposta(Status.OK, response);
+				else
+					this.enviaResposta(Status.EXPECTATION_FAILED, response);
+
 			} else if (path.startsWith("/alterarDadosCadastrados") && "POST".equals(method)) {
-				resposta = doadoresService.alterarDadosCadastrados(request);
-				this.enviaResposta(Status.OK, response, resposta);
-			} else {
-				this.naoEncontrado(response, path);
+				if (doadoresService.alterarDadosCadastrados(request))
+					this.enviaResposta(Status.OK, response);
+				else
+					this.enviaResposta(Status.EXPECTATION_FAILED, response);
 			}
 
 		} catch (Exception e) {
@@ -47,39 +46,20 @@ public class URLMetodo implements Container {
 		}
 	}
 
-	private void naoEncontrado(Response response, String path) throws Exception {
-		JSONObject error = new JSONObject();
-		error.put("error", "Não encontrado.");
-		error.put("path", path);
-		enviaResposta(Status.NOT_FOUND, response, error.toString());
-	}
-
-	private void enviaResposta(Status status, Response response, String str) throws Exception {
-
+	private void enviaResposta(Status status, Response response) throws Exception {
+		PrintStream body = response.getPrintStream();
 		long time = System.currentTimeMillis();
-
-		response.setValue("Content-Type", "application/json");
+		response.setValue("Content-Type", "text/html");
 		response.setValue("Server", "Controle de doadoresService (1.0)");
 		response.setDate("Date", time);
 		response.setDate("Last-Modified", time);
 		response.setStatus(status);
-
-	}
-
-	public JSONObject toJSON() throws JSONException {
-		JSONObject json = new JSONObject();
-		return json;
+		body.close();
 	}
 
 	public static void main(String[] list) throws Exception {
 
-		// Instancia o doadoresService Service
 		doadoresService = new ListaDeDoadoresService();
-
-		// Se você receber uma mensagem
-		// "Address already in use: bind error",
-		// tente mudar a porta.
-
 		int porta = 8080;
 
 		// Configura uma conexão soquete para o servidor HTTP.
@@ -94,7 +74,5 @@ public class URLMetodo implements Container {
 
 		conexao.close();
 		servidor.stop();
-
 	}
-
 }

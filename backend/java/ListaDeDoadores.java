@@ -20,6 +20,7 @@ public class ListaDeDoadores {
 		arquivo = new Arquivo(caminhoArquivo);
 		setLista(new LinkedList<>());
 		setBuffReader(arquivo.abrirArquivo());
+		criarLista();
 		setIndexDoador(-1);
 	}
 
@@ -39,7 +40,7 @@ public class ListaDeDoadores {
 		System.out.println(json);
 	}
 
-	public boolean adicionarDoador(Doador doador) throws IOException {
+	public Boolean adicionarDoador(Doador doador) throws IOException {
 		Boolean foiAdicionado = getLista().add(doador);
 		salvarLista();
 		return foiAdicionado;
