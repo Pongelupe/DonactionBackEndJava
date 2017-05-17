@@ -1,3 +1,4 @@
+package sql;
 import java.io.PrintStream;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
@@ -14,7 +15,7 @@ import org.simpleframework.transport.connect.SocketConnection;
 
 public class URLMetodo implements Container {
 
-	public static ListaDeDoadoresService doadoresService;
+	public static DoadorService dS;
 
 	@Override
 	public void handle(Request request, Response response) {
@@ -23,20 +24,18 @@ public class URLMetodo implements Container {
 			String method = request.getMethod();
 
 			if (path.startsWith("/adicionarDoador") && "POST".equals(method)) {
-				if (doadoresService.adicionarDoador(request))
+				if (dS.insert(request))
 					this.enviaResposta(Status.CREATED, response);
 				else
 					this.enviaResposta(Status.EXPECTATION_FAILED, response);
-
 			} else if (path.startsWith("/logarConta") && "POST".equals(method)) {
-				String dadosDoUsuario = doadoresService.logarConta(request);
+				String dadosDoUsuario = dS.select(request);
 				if (dadosDoUsuario != null)
 					this.enviaResposta(Status.OK, response, toJSON(dadosDoUsuario));
 				else
 					this.enviaResposta(Status.EXPECTATION_FAILED, response);
-
 			} else if (path.startsWith("/alterarDadosCadastrados") && "POST".equals(method)) {
-				if (doadoresService.alterarDadosCadastrados(request))
+				if (dS.update(request))
 					this.enviaResposta(Status.OK, response);
 				else
 					this.enviaResposta(Status.EXPECTATION_FAILED, response);
@@ -50,6 +49,9 @@ public class URLMetodo implements Container {
 	private void enviaResposta(Status status, Response response) throws Exception {
 		PrintStream body = response.getPrintStream();
 		long time = System.currentTimeMillis();
+		response.setValue("Access-Control-Allow-Origin","*");
+		response.setValue("Access-Control-Allow-Methods","GET,POST");
+	    response.setValue("Access-Control-Allow-Headers","Origin, X-Requested-With, Content-Type, Accept");
 		response.setValue("Content-Type", "text/html");
 		response.setValue("Server", "Controle de doadoresService (1.0)");
 		response.setDate("Date", time);
@@ -61,6 +63,9 @@ public class URLMetodo implements Container {
 	private void enviaResposta(Status status, Response response, JSONObject json) throws Exception {
 		PrintStream body = response.getPrintStream();
 		long time = System.currentTimeMillis();
+		response.setValue("Access-Control-Allow-Origin","*");
+		response.setValue("Access-Control-Allow-Methods","GET,POST");
+	    response.setValue("Access-Control-Allow-Headers","Origin, X-Requested-With, Content-Type, Accept");
 		response.setValue("Content-Type", "application/json");
 		response.setValue("Server", "Controle de Login");
 		response.setDate("Date", time);
@@ -77,10 +82,10 @@ public class URLMetodo implements Container {
 	
 	public static void main(String[] list) throws Exception {
 
-		doadoresService = new ListaDeDoadoresService();
+//		To test the back-end, Azure's SQL credentials are needed, contact Master Eric to get then. 
+//		dS = new DoadorService();
 		int porta = 8080;
 
-		// Configura uma conexão soquete para o servidor HTTP.
 		Container container = new URLMetodo();
 		ContainerSocketProcessor servidor = new ContainerSocketProcessor(container);
 		Connection conexao = new SocketConnection(servidor);
