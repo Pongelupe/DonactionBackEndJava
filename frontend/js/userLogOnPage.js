@@ -29,12 +29,13 @@ $("#myForm").submit(function(event){
 
 function SerializedUserData() {
     var userName = document.getElementById('name').value;
+    var userCpf = document.getElementById('cpf').value;
     var userEmail = document.getElementById('email').value;
     var userPwd = document.getElementById('password').value;
     var userLocation = document.getElementById('city').value;
     var userBlood = document.getElementById('bloody').value;
     var userDonator = toDonate();
-    return "nome=" + userName + "&email=" + userEmail + "&senha=" + userPwd + "&cidade=" + userLocation 
+    return "nmDoador=" + userName + "&nrCpf=" + userCpf + "&emailDoador=" + userEmail + "&senhaDoador=" + userPwd + "&cidadeDoador=" + userLocation 
         + "&tipoSanguineo=" + userBlood + "&podeDoar=" + userDonator;
 }
 
@@ -63,7 +64,10 @@ function toDonate() {
 }
 
 function validateForm() {
-    if (document.getElementsByTagName("input")[0].value == "" || document.getElementsByTagName("input")[1].value == "" || document.getElementsByTagName("input")[2].value == "" || document.getElementById('bloody').value =='Tipo Sanguíneo' || !validateCheckBox(7)) {
+    if (document.getElementsByTagName("input")[0].value == "" || document.getElementsByTagName("input")[1].value == "" 
+        || document.getElementsByTagName("input")[2].value == "" || document.getElementsByTagName("input")[3].value == "" 
+        || document.getElementById('city').value == 'Cidade' || document.getElementById('bloody').value =='Tipo Sanguíneo' 
+        || !validateCheckBox(7)) {
         return false;
     } else {
         return true;

@@ -12,6 +12,7 @@ function userSession() {
     document.getElementById("userAvatar").src = "https://api.adorable.io/avatars/180/" + userData.id + ".png";
     document.getElementById("userName").innerHTML = userData.nome;
     document.getElementById("userBlood").innerHTML = userData.tipoSanguineo;
+    document.getElementById("cpf").value = userData.nrCpf;
     document.getElementById("email").value = userData.email;
     document.getElementById("city").value = userData.cidade;
 }
@@ -39,10 +40,10 @@ $("#updateData").submit(function(event){
 
 function SerializedUserData() {
     var userData = JSON.parse(localStorage.getItem("userData"));
-    var id = userData.id;
+    var cdDoador = userData.id;
     var userEmail = document.getElementById('email').value;
     var userLocation = document.getElementById('city').value;
-    return "email=" + userEmail + "&cidade=" + userLocation + "&id=" + id;
+    return "cdDoador=" + cdDoador + "&emailDoador=" + userEmail + "&cidadeDoador=" + userLocation;
 }
 
 function notBlank(inputId) {
@@ -50,9 +51,6 @@ function notBlank(inputId) {
     var inputValue = document.getElementById(inputId).value;
     if (inputValue == "" && inputId == "email") {
         document.getElementById(inputId).value = userData.email
-    }
-    if (inputValue == "" && inputId == "city") {
-        document.getElementById(inputId).value = userData.cidade
     }
 }
 

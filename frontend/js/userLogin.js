@@ -20,5 +20,5 @@ $("#loginForm").submit(function(event){
 function SerializedUserData() {
     var userEmail = document.getElementById('userEmail').value;
     var userPassword = document.getElementById('userPassword').value;
-    return "email=" + userEmail + "&senha=" + userPassword;
+    return "emailDoador=" + userEmail + "&senhaDoador=" + userPassword;
 }

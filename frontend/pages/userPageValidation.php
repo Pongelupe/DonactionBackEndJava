@@ -13,25 +13,6 @@
     <link href="../css/navBar.css" rel="stylesheet" type="text/css" />
     <link href="../css/datePicker.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../vendor/sweetalert/css/sweetalert.css">
-
-    <!-- JavaScript's Files -->
-    <script src="../vendor/jquery/jquery.min.js"></script>
-    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
-    <script src="../vendor/sweetalert/js/sweetalert.min.js"></script>
-    <script src="../vendor/date-picker/datePicker.js"></script>
-    <script src="../vendor/moment/moment.js"></script>
-    <script src="../js/userUpdate.js"></script>
-    <script src="../js/userPageValidation.js"></script>
-    <script src="../js/userPageSideBar.js"></script>
-    <script type="text/javascript">
-        $(function() {
-            $('#dataVoucher').datetimepicker({
-                locale: 'pt-BR'
-            });
-            $('#dataVoucher').datetimepicker();
-        });
-        $('#dataVoucher').data('date');
-    </script>
 </head>
 <body onload="userFirstSession()">
     <!-- Include of the navBar -->
@@ -87,5 +68,24 @@
             </div>
         </form>
     </div>
+    
+        <!-- JavaScript's Files -->
+    <script src="../vendor/jquery/jquery.min.js"></script>
+    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../vendor/sweetalert/js/sweetalert.min.js"></script>
+    <script src="../vendor/moment/moment.js"></script>
+    <script src="../vendor/date-picker/datePicker.js"></script>
+    <script src="../js/userUpdate.js"></script>
+    <script src="../js/userPageValidation.js"></script>
+    <script src="../js/userPageSideBar.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            $('#dataVoucher').datetimepicker({
+                locale: 'pt-BR'
+            });
+            $('#dataVoucher').datetimepicker();
+        });
+        $('#dataVoucher').data('date');
+    </script>
 </body>
 </html>

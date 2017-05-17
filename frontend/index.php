@@ -26,17 +26,6 @@
     <link href="css/modalLogin.css" rel="stylesheet">
     <link href="vendor/sweetalert/css/sweetalert.css" rel="stylesheet">
     <link href="css/indexPage.css" rel="stylesheet">
-
-    <!-- JavaScript's Files-->
-    <!-- Libs -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-    <script src="vendor/sweetalert/js/sweetalert.min.js"></script>
-    <script src="vendor/agency/agency.min.js"></script>
-
-    <!-- Files -->
-    <script src="js/userLogin.js"></script>
 </head>
 
 <body id="page-top" class="index">
@@ -349,6 +338,17 @@
     
     <!-- Partner's Modal-->
     <?php include 'pages/indexModal.php';?>
+
+    <!-- JavaScript's Files-->
+    <!-- Libs -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="vendor/sweetalert/js/sweetalert.min.js"></script>
+    <script src="vendor/agency/agency.min.js"></script>
+
+    <!-- Files -->
+    <script src="js/userLogin.js"></script>
 </body>
 
 </html>

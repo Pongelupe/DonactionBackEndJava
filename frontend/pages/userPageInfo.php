@@ -41,6 +41,15 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-12">
+                        <label for="cpf">
+                            CPF
+                        </label>
+                        <input class="form-control" id="cpf" name="cpf" type="text" readonly>
+                        </input>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
                         <label for="email">
                             EMAIL
                         </label>
@@ -50,10 +59,14 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-12">
-                        <label for="phone">
+                        <label for="cidade">
                             CIDADE
                         </label>
-                        <input class="form-control" id="city" name="cidade" onclick="clearField(this.id)" onfocusout="notBlank(this.id)" type="text">
+                        <select class="form-control" id="city" title="Cidade">
+                            <option>Belo Horizonte</option>
+                            <option>Contagem</option>
+                            <option>Betim</option>
+                        </select>
                         </input>
                     </div>
                 </div>
