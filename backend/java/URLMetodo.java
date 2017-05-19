@@ -23,23 +23,30 @@ public class URLMetodo implements Container {
 			String path = request.getPath().getPath();
 			String method = request.getMethod();
 
-			if (path.startsWith("/adicionarDoador") && "POST".equals(method)) {
-				if (dS.insert(request))
+			if (path.startsWith("/cadastrar") && "POST".equals(method)) {
+				if (dS.cadastrar(request))
 					this.enviaResposta(Status.CREATED, response);
 				else
 					this.enviaResposta(Status.EXPECTATION_FAILED, response);
-			} else if (path.startsWith("/logarConta") && "POST".equals(method)) {
-				String dadosDoUsuario = dS.select(request);
+				
+			} else if (path.startsWith("/logar") && "POST".equals(method)) {
+				String dadosDoUsuario = dS.logar(request);
 				if (dadosDoUsuario != null)
 					this.enviaResposta(Status.OK, response, toJSON(dadosDoUsuario));
 				else
 					this.enviaResposta(Status.EXPECTATION_FAILED, response);
-			} else if (path.startsWith("/alterarDadosCadastrados") && "POST".equals(method)) {
-				if (dS.update(request))
+				
+			} else if (path.startsWith("/atualizarCadastro") && "POST".equals(method)) {
+				if (dS.atualizarCadastro(request))
 					this.enviaResposta(Status.OK, response);
 				else
 					this.enviaResposta(Status.EXPECTATION_FAILED, response);
-			}
+			} else if (path.startsWith("/validarVoucher") && "POST".equals(method)) {
+				if (dS.validarVoucher(request))
+					this.enviaResposta(Status.OK, response);
+				else
+					this.enviaResposta(Status.EXPECTATION_FAILED, response);
+			} 
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -81,7 +88,6 @@ public class URLMetodo implements Container {
 	}
 	
 	public static void main(String[] list) throws Exception {
-
 //		To test the back-end, Azure's SQL credentials are needed, contact Master Eric to get then. 
 //		dS = new DoadorService();
 		int porta = 8080;

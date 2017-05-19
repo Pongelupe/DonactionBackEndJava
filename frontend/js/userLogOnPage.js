@@ -9,7 +9,7 @@ $("#myForm").submit(function(event){
         var porta = 8080;
         $.ajax({
             type: "POST",
-            url: $(this).attr('action') + ":" + porta + "/adicionarDoador",
+            url: $(this).attr('action') + ":" + porta + "/cadastrar",
             data: formData,
             success: function(data, textStatus, jqXHR) {
                 swal({
@@ -33,7 +33,7 @@ function SerializedUserData() {
     var userEmail = document.getElementById('email').value;
     var userPwd = document.getElementById('password').value;
     var userLocation = document.getElementById('city').value;
-    var userBlood = document.getElementById('bloody').value;
+    var userBlood = $('#bloody').val().charAt(1) == '+' ? $('#bloody').val().charAt(0) : $('#bloody').val();
     var userDonator = toDonate();
     return "nmDoador=" + userName + "&nrCpf=" + userCpf + "&emailDoador=" + userEmail + "&senhaDoador=" + userPwd + "&cidadeDoador=" + userLocation 
         + "&tipoSanguineo=" + userBlood + "&podeDoar=" + userDonator;

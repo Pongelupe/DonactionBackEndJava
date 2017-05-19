@@ -3,7 +3,7 @@ function userFirstSession() {
     var userData = JSON.parse(localStorage.getItem("userData"));
     document.getElementById("userAvatar").src = "https://api.adorable.io/avatars/180/" + userData.id + ".png";
     document.getElementById("userName").innerHTML = userData.nome;
-    document.getElementById("userBlood").innerHTML = userData.tipoSanguineo;
+    userData.tipoSanguineo.charAt(1) == "" ? $("#userBlood").text(userData.tipoSanguineo + "+") : $("#userBlood").text(userData.tipoSanguineo);
 }
 
 function userSession() {
@@ -27,7 +27,7 @@ $("#updateData").submit(function(event){
     var formData = SerializedUserData();
     $.ajax({
         type: "POST",
-        url: $(this).attr('action') + ":" + porta + "/alterarDadosCadastrados",
+        url: $(this).attr('action') + ":" + porta + "/atualizarCadastro",
         data: formData,
         success: function(data, textStatus, jqXHR) {
             sweetAlert("Dados Alterados com Sucesso!","","success");      

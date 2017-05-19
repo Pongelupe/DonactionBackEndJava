@@ -1,8 +1,5 @@
 package sql;
 import java.sql.Connection;
-import java.sql.ResultSet;
-
-import org.simpleframework.http.Request;
 
 public abstract class SQLMetodos<T> {
 	private String hostName;
@@ -21,14 +18,6 @@ public abstract class SQLMetodos<T> {
 				"jdbc:sqlserver://%s.database.windows.net:1433;database=%s;user=%s;password=%s;encrypt=true;hostNameInCertificate=*.database.windows.net;loginTimeout=30;",
 				hostName, dbName, user, pwd));
 	}
-	
-	public abstract Boolean insert(Request request) throws Exception;
-	
-	public abstract Boolean update(Request request) throws Exception;
-	
-	public abstract String select(Request request) throws Exception;
-	
-	public abstract T createObject(ResultSet resultSet) throws Exception;
 	
 	public String getHostName() {
 		return hostName;

@@ -16,12 +16,7 @@ public class DoadorService extends SQLMetodos<Doador> {
 		super(hostName, dbName, user, pwd);
 	}
 	
-	DoadorService() {
-		super();
-	}
-	
-	@Override
-	public Boolean insert(Request request) throws Exception {
+	public Boolean cadastrar(Request request) throws Exception {
 		setConnection(DriverManager.getConnection(getUrl()));
 		Query query = request.getQuery();
 		Boolean adicionado = true;
@@ -45,8 +40,7 @@ public class DoadorService extends SQLMetodos<Doador> {
 		return adicionado;
 	}
 
-	@Override	
-	public Boolean update(Request request) throws Exception {
+	public Boolean atualizarCadastro(Request request) throws Exception {
 		setConnection(DriverManager.getConnection(getUrl()));
 		Query query = request.getQuery();
 		Boolean atualizado = true;
@@ -67,8 +61,7 @@ public class DoadorService extends SQLMetodos<Doador> {
 		return atualizado;
 	}
 	
-	@Override
-	public String select(Request request) throws Exception {
+	public String logar(Request request) throws Exception {
 		setConnection(DriverManager.getConnection(getUrl()));
 		Gson gson = new Gson();
 		Query query = request.getQuery();
@@ -81,7 +74,7 @@ public class DoadorService extends SQLMetodos<Doador> {
 				+ "' AND SENHADOADOR = '" + senha + "'";
 		try (Statement statement = getConnection().createStatement();
 			ResultSet resultSet = statement.executeQuery(selectSql)) {
-			dadosDoUsuario = createObject(resultSet);
+			dadosDoUsuario = objetoUsuario(resultSet);
         } catch (Exception e) {
         	dadosDoUsuario = null;
         	e.printStackTrace();
@@ -90,9 +83,8 @@ public class DoadorService extends SQLMetodos<Doador> {
 			return gson.toJson(dadosDoUsuario, Doador.class);
 		return null;
 	}
-	
-	@Override
-	public Doador createObject(ResultSet resultSet) throws Exception {
+
+	private Doador objetoUsuario(ResultSet resultSet) throws Exception {
 		resultSet.next();
 		Integer id = new Integer(resultSet.getInt("CDDOADOR"));
 		BigInteger nrCpf = new BigInteger(resultSet.getString("NRCPF"));
@@ -104,4 +96,72 @@ public class DoadorService extends SQLMetodos<Doador> {
 		Boolean podeDoar = resultSet.getBoolean("PODEDOAR");
 		return new Doador(id, nrCpf, nome, email, senha, cidade, tipoSanguineo, podeDoar);
 	}
+	
+	public Boolean validarVoucher(Request request) throws Exception {
+		setConnection(DriverManager.getConnection(getUrl()));
+		Query query = request.getQuery();
+		Boolean ehValido = false;
+		Integer cdDoador = query.getInteger("cdDoador");
+		String nmVoucher = query.get("nmVoucher");
+		String dtVoucher = query.get("dtVoucher");
+		String selectSql = querySelectVoucher(nmVoucher, dtVoucher);
+		try (Statement statement = getConnection().createStatement();
+			ResultSet resultSet = statement.executeQuery(selectSql)) {
+			ehValido = (resultSet.next()) ? inserirDoadorVoucher(resultSet, cdDoador, dtVoucher) : ehValido;
+        } catch (Exception e) {
+        	e.printStackTrace();
+		}
+		return ehValido;
+	}
+	
+	private String querySelectVoucher(String nmVoucher, String dtVoucher) {
+		return
+				"SELECT  V.CDVOUCHER, " 
+				+ "V.NMVOUCHER, " 		
+				+ "V.EHVALIDO, " 		
+				+ "C.DTINICIO, " 		
+		        + "C.DTFIM "			
+		        + "FROM VOUCHER V "		
+		        + "INNER JOIN EMPRCAMPANHA E ON V.PREFVOUCHER = E.PREFVOUCHER "
+		        + "INNER JOIN CAMPANHA C ON E.CDCAMPANHA = C.CDCAMPANHA "		
+		        + "WHERE NMVOUCHER = '" + nmVoucher + "' "							
+		        + "AND '" + dtVoucher + "' " + "BETWEEN C.DTINICIO AND C.DTFIM";
+	}
+	
+	private Boolean inserirDoadorVoucher(ResultSet resultSet, Integer cdDoador, String dtVoucher) throws Exception {
+		Integer cdVoucher = new Integer(resultSet.getInt("CDVOUCHER"));
+		String insertSql = 
+				"INSERT INTO DOADORVOUCHER (CDVOUCHER, CDDOADOR, DTRECEBIMENTO) "
+				+ "VALUES (?,?,?);";
+		try (PreparedStatement prep = getConnection().prepareStatement(insertSql)) {
+            prep.setInt(1, cdVoucher);
+            prep.setInt(2, cdDoador);
+            prep.setDate(3, java.sql.Date.valueOf(dtVoucher));
+            int count = prep.executeUpdate();
+            System.out.println("Inserida: " + count + " linha(s)");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return (atualizarValidadeVoucher(cdVoucher)) ? true : false;
+	}
+	
+	private Boolean atualizarValidadeVoucher(Integer cdVoucher) throws Exception {
+		setConnection(DriverManager.getConnection(getUrl()));
+		Boolean atualizado = true;
+		String updateSql = 
+				  "UPDATE VOUCHER "
+				+ "SET EHVALIDO = 0 "
+				+ "WHERE CDVOUCHER = ?";
+		try (PreparedStatement prep = getConnection().prepareStatement(updateSql)) {
+            prep.setInt(1, cdVoucher);
+            int count = prep.executeUpdate();
+            System.out.println("Editada: " + count + " linha(s)");
+		} catch (Exception e) {
+			atualizado = false;
+			e.printStackTrace();
+		}
+		return atualizado;
+	}
+
+	
 }

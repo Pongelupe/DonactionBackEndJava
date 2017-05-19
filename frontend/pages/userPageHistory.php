@@ -13,7 +13,7 @@
         <link href="../vendor/sweetalert/css/sweetalert.css" rel="stylesheet"/>
         <link href="../css/userPageHistory.css" rel="stylesheet"/>
     </head>
-    <body onload="userSession()">
+    <body>
         <!-- Include of the navBar -->
         <?php include 'userPageSideBar.php';?>
         <section style="background:#efefe9;">

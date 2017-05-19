@@ -4,7 +4,7 @@ $("#loginForm").submit(function(event){
     var formData = SerializedUserData();
     $.ajax({
         type: "POST",
-        url: $(this).attr('action') + ":" + porta + "/logarConta",
+        url: $(this).attr('action') + ":" + porta + "/logar",
         data: formData,
         success: function(data, textStatus, jqXHR) {
             var userSession = JSON.parse(jqXHR.responseText);

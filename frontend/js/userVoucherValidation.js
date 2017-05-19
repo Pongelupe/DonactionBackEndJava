@@ -14,13 +14,16 @@ $("#voucherForm").submit(function(event){
                 swal({
                     html: true,
                     title: "Pronto!",
-                    text: "O seu voucher foi validado, basta usá-lo.",
+                    text: "O seu voucher foi validado, basta utilizá-lo.",
                     type: "success",
                     confirmButtonText: "Continuar",
                     closeOnConfirm: false,
                 }, function() {
-                    location.href = "../userPageHistory.php"
+                    location.href = "userPageHistory.php"
                 })
+            },
+            error: function(xhr, textStatus, errorThrown) {
+            sweetAlert("Voucher Indisponível!", "O código inserido já foi utilizado ou é inválido.", "error");
             }
         });
     }
@@ -47,7 +50,7 @@ function formatarData(data) {
     var dia = data.substring(0, data.indexOf("/"));
     var mes = data.substring(3, data.lastIndexOf("/"));
     var ano = data.substring(data.lastIndexOf("/") + 1, data.length);
-    return ano + '/' + mes + '/' + dia;
+    return ano + '-' + mes + '-' + dia;
 }
 
 
