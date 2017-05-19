@@ -21,7 +21,7 @@
         <div class="collapse navbar-collapse" id="bs-sidebar-navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <li>
-                    <a href="userPageValidation.php">
+                    <a href="userVoucherValidation.php">
                         Valide seu Voucher
                         <span class="pull-right hidden-xs showopacity glyphicon glyphicon-tag" style="font-size:16px;">
                         </span>

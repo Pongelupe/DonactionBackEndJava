@@ -61,7 +61,7 @@ function endSession() {
 
 function classActive() {
     var currentPage = location.href.split('/')[location.href.split('/').length - 1];
-    if (currentPage == "userPageValidation.php") {
+    if (currentPage == "userVoucherValidation.php") {
         document.getElementsByTagName("li")[0].className = "active";
     }
     if (currentPage == "userPageInfo.php") {

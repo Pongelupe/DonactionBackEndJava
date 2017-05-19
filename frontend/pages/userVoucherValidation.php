@@ -18,7 +18,7 @@
     <!-- Include of the navBar -->
     <?php include 'userPageSideBar.php';?>
     <div class="container-fluid">
-        <form class="register-form">
+        <form class="register-form" id="voucherForm" action="http://127.0.0.1" method="POST">
             <div class="row row-centered">
                 <div class="col-lg-12 col-centered">
                     <picture>
@@ -45,7 +45,7 @@
                     <label for="date">
                         DATA
                     </label>
-                        <input id='dataVoucher' data-format="dd-MM-yyyy hh:mm:ss" type='text' class="form-control" placeholder="dd-MM-yyyy hh:mm" />
+                        <input id='dtVoucher' data-format="dd-MM-yyyy" type='text' class="form-control" placeholder="dd-MM-yyyy" />
                 </div>
             </div>
             <div class="row">
@@ -54,14 +54,14 @@
                         CÓDIGO
                     </label>
                     <div class="form-group">
-                        <input type="Código" class="form-control" id="inputCodigo" placeholder="XXXX-XXX-XX">
+                        <input type="Código" class="form-control" id="nmVoucher" placeholder="XXXX-XXXXXXX">
                     </div>
                 </div>
             </div>
             <hr />
             <div class="row row-centered">
                 <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12 col-centered">
-                    <button class="btn btn-default logbutton" onclick="validarVoucher()" type="button">
+                    <button class="btn btn-default logbutton" type="submit">
                         Validar!
                     </button>
                 </div>
@@ -76,16 +76,17 @@
     <script src="../vendor/moment/moment.js"></script>
     <script src="../vendor/date-picker/datePicker.js"></script>
     <script src="../js/userUpdate.js"></script>
-    <script src="../js/userPageValidation.js"></script>
+    <script src="../js/userVoucherValidation.js"></script>
     <script src="../js/userPageSideBar.js"></script>
     <script type="text/javascript">
         $(function() {
-            $('#dataVoucher').datetimepicker({
-                locale: 'pt-BR'
+            $('#dtVoucher').datetimepicker({
+                locale: 'pt-BR',
+                format: 'DD/MM/YYYY'
             });
-            $('#dataVoucher').datetimepicker();
+            $('#dtVoucher').datetimepicker();
         });
-        $('#dataVoucher').data('date');
+        $('#dtVoucher').data('date');
     </script>
 </body>
 </html>

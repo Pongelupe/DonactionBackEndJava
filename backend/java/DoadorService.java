@@ -1,9 +1,11 @@
 package sql;
 
+import java.math.BigInteger;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+
 import org.simpleframework.http.Query;
 import org.simpleframework.http.Request;
 import com.google.gson.Gson;
@@ -12,6 +14,10 @@ public class DoadorService extends SQLMetodos<Doador> {
 	
 	DoadorService(String hostName, String dbName, String user, String pwd) {
 		super(hostName, dbName, user, pwd);
+	}
+	
+	DoadorService() {
+		super();
 	}
 	
 	@Override
@@ -24,7 +30,7 @@ public class DoadorService extends SQLMetodos<Doador> {
 				+ "VALUES (?,?,?,?,?,?,?);";
 		try (PreparedStatement prep = getConnection().prepareStatement(insertSql)) {
             prep.setString(1, query.get("nmDoador"));
-            prep.setInt(2, query.getInteger("nrCpf"));
+            prep.setDouble(2, Double.parseDouble(query.get("nrCpf")));
             prep.setString(3, query.get("emailDoador"));
             prep.setString(4, query.get("senhaDoador"));
             prep.setString(5, query.get("cidadeDoador"));
@@ -34,6 +40,7 @@ public class DoadorService extends SQLMetodos<Doador> {
             System.out.println("Inserida: " + count + " linha(s)");
 		} catch (Exception e) {
 			adicionado = false;
+			e.printStackTrace();
 		}
 		return adicionado;
 	}
@@ -55,6 +62,7 @@ public class DoadorService extends SQLMetodos<Doador> {
             System.out.println("Editada: " + count + " linha(s)");
 		} catch (Exception e) {
 			atualizado = false;
+			e.printStackTrace();
 		}
 		return atualizado;
 	}
@@ -76,6 +84,7 @@ public class DoadorService extends SQLMetodos<Doador> {
 			dadosDoUsuario = createObject(resultSet);
         } catch (Exception e) {
         	dadosDoUsuario = null;
+        	e.printStackTrace();
 		}
 		if (dadosDoUsuario != null)
 			return gson.toJson(dadosDoUsuario, Doador.class);
@@ -86,7 +95,7 @@ public class DoadorService extends SQLMetodos<Doador> {
 	public Doador createObject(ResultSet resultSet) throws Exception {
 		resultSet.next();
 		Integer id = new Integer(resultSet.getInt("CDDOADOR"));
-		Integer nrCpf = new Integer(resultSet.getInt("NRCPF"));
+		BigInteger nrCpf = new BigInteger(resultSet.getString("NRCPF"));
 		String nome = resultSet.getString("NMDOADOR");
 		String email = resultSet.getString("EMAILDOADOR");
 		String senha = resultSet.getString("SENHADOADOR");

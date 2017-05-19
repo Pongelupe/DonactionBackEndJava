@@ -9,7 +9,7 @@ $("#loginForm").submit(function(event){
         success: function(data, textStatus, jqXHR) {
             var userSession = JSON.parse(jqXHR.responseText);
             localStorage.setItem("userData", JSON.stringify(userSession));
-            location.href = ("pages/userPageValidation.php");       
+            location.href = ("pages/userVoucherValidation.php");       
         },
         error: function(xhr, textStatus, errorThrown) {
             sweetAlert("Login inválido!","","error");

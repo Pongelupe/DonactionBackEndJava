@@ -1,21 +1,21 @@
 package sql;
 
+import java.math.BigInteger;
+
 public class Doador extends Usuario {
 	
-	private Integer nrCpf;
+	private BigInteger nrCpf;
 	private String tipoSanguineo;
 	private Boolean podeDoar;
 	
-	public Doador(Integer id, Integer nrCpf, String nome, String email, String senha, String cidade, String tipoSanguineo, Boolean podeDoar) {
+	public Doador(Integer id, BigInteger nrCpf, String nome, String email, String senha, String cidade, String tipoSanguineo, Boolean podeDoar) {
 		super(id, nome, email, senha, cidade);
 		setNrCpf(nrCpf);
 		setTipoSanguineo(tipoSanguineo);
 		setPodeDoar(podeDoar);
 	}
 	
-
-	
-	public Integer getNrCpf() {
+	public BigInteger getNrCpf() {
 		return nrCpf;
 	}
 
@@ -27,7 +27,7 @@ public class Doador extends Usuario {
 		return podeDoar;
 	}
 
-	public void setNrCpf(Integer nrCpf) {
+	public void setNrCpf(BigInteger nrCpf) {
 		this.nrCpf = nrCpf;
 	}
 
