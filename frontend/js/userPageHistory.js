@@ -52,3 +52,23 @@ $(function(){
 	});
 	$('[data-toggle="tooltip"]').tooltip();
 });
+
+$(function() {
+	$("#donaction").on("click", function(){
+	  	var address = 'http://127.0.0.1:8080/historico';
+	  	var userData = JSON.parse(localStorage.getItem("userData"));
+	    var formData = "cdDoador=" + userData.id;
+	    $.ajax({
+	        type: "POST",
+	        url: address,
+	        data: formData,
+	        success: function(data, textStatus, jqXHR) {
+	            var userHistory = JSON.parse(jqXHR.responseText);
+    			console.log(userHistory);
+	        },
+	        error: function(xhr, textStatus, errorThrown) {
+	            sweetAlert("Deu Ruim!","","error");
+	        }
+	    });
+	});
+});

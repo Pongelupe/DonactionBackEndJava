@@ -2,8 +2,11 @@ var canDonate = ["", "", "", ""];
 
 $("#myForm").submit(function(event){
     event.preventDefault();
-    if(!validateForm())
+    $('#submit').click(false);
+    if(!validateForm()) {
         sweetAlert("Formulário inválido!", "Preencha todos os campos!", "error");
+        $('#submit').off('click');
+    }
     else {
         var formData = SerializedUserData();
         var porta = 8080;

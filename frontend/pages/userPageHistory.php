@@ -33,7 +33,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a data-toggle="tab" href="#donations" title="Doações">
+                                    <a id ="donaction" data-toggle="tab" href="#donations" title="Doações">
                                         <span class="round-tabs two">
                                             <i class="glyphicon glyphicon-heart">
                                             </i>
