@@ -163,7 +163,7 @@ public class EmpresaService extends SQLMetodos<Empresa>{
 			+ "INNER JOIN CAMPANHA C ON EC.CDCAMPANHA = C.CDCAMPANHA "
 			+ "INNER JOIN VOUCHER V ON EC.PREFVOUCHER = V.PREFVOUCHER "
 			+ "WHERE "
-			+ "EC.CDEMPRESA = '6' "
+			+ "EC.CDEMPRESA = '" + cdEmpresa + "' "
 			+ "GROUP BY C.NMCAMPANHA, C.DSCAMPANHA, C.VLRINVESTIMENTO, V.PREFVOUCHER, EC.DTINICIO, C.DTFIM";
 	}
 	private Collection<EmprCampanha> objetoHistorico(ResultSet resultSet, Collection<EmprCampanha> listaHistorico) throws Exception {
@@ -205,17 +205,6 @@ public class EmpresaService extends SQLMetodos<Empresa>{
 		return listaCampanhas;
 	}
 	
-	private Empresa objetoEmpresa(ResultSet resultSet) throws Exception {
-		resultSet.next();
-		Integer id = new Integer(resultSet.getInt("CDEMPRESA"));
-		BigInteger cnpj = new BigInteger(resultSet.getString("NRCNPJ"));
-		String nome = resultSet.getString("NMEMPRESA");
-		String email = resultSet.getString("EMAILEMPRESA");
-		String senha = resultSet.getString("SENHAEMPRESA");
-		String cidade = resultSet.getString("CIDADEEMPRESA");
-		return new Empresa(id, cnpj, nome, email, senha, cidade);
-	}
-
 	private Boolean gerarVoucher(String prefVoucher, Integer qtdMinVoucher) throws Exception {
 		Collection<Voucher> listaVoucher = new ArrayList<>(qtdMinVoucher);
 		SecureRandom random = new SecureRandom();
@@ -247,5 +236,16 @@ public class EmpresaService extends SQLMetodos<Empresa>{
 			}
 		}
 		return adicionado;
+	}
+
+	private Empresa objetoEmpresa(ResultSet resultSet) throws Exception {
+		resultSet.next();
+		Integer id = new Integer(resultSet.getInt("CDEMPRESA"));
+		BigInteger cnpj = new BigInteger(resultSet.getString("NRCNPJ"));
+		String nome = resultSet.getString("NMEMPRESA");
+		String email = resultSet.getString("EMAILEMPRESA");
+		String senha = resultSet.getString("SENHAEMPRESA");
+		String cidade = resultSet.getString("CIDADEEMPRESA");
+		return new Empresa(id, cnpj, nome, email, senha, cidade);
 	}
 }
