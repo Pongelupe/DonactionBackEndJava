@@ -5,9 +5,14 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Collection;
+import java.util.LinkedList;
 
 import org.simpleframework.http.Query;
 import org.simpleframework.http.Request;
+
 import com.google.gson.Gson;
 
 public class DoadorService extends SQLMetodos<Doador> {
@@ -84,6 +89,25 @@ public class DoadorService extends SQLMetodos<Doador> {
 		return null;
 	}
 
+	public String historico(Request request) throws Exception {
+		Collection<DoadorVoucher> listaHistorico = new LinkedList<>();
+		setConnection(DriverManager.getConnection(getUrl()));
+		Gson gson = new Gson();
+		Query query = request.getQuery();
+		String cdDoador = query.get("cdDoador");
+		String selectSql = querySelectHistorico(cdDoador);
+		String historicoDoador = null;
+		try (Statement statement = getConnection().createStatement();
+			ResultSet resultSet = statement.executeQuery(selectSql)) {
+			listaHistorico = objetoHistorico(resultSet, listaHistorico);
+        } catch (Exception e) {
+        	e.printStackTrace();
+		}
+		if (!listaHistorico.isEmpty())
+			historicoDoador = gson.toJson(listaHistorico);
+		return historicoDoador;
+	}
+	
 	private Doador objetoUsuario(ResultSet resultSet) throws Exception {
 		resultSet.next();
 		Integer id = new Integer(resultSet.getInt("CDDOADOR"));
@@ -95,6 +119,18 @@ public class DoadorService extends SQLMetodos<Doador> {
 		String tipoSanguineo = resultSet.getString("TIPOSANGUINEO");
 		Boolean podeDoar = resultSet.getBoolean("PODEDOAR");
 		return new Doador(id, nrCpf, nome, email, senha, cidade, tipoSanguineo, podeDoar);
+	}
+	
+	private Collection<DoadorVoucher> objetoHistorico(ResultSet resultSet, Collection<DoadorVoucher> listaHistorico) throws Exception {
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+		while(resultSet.next()) {
+			String nmCampanha = resultSet.getString("NMCAMPANHA");
+			String nmEmpresa = resultSet.getString("NMEMPRESA");
+			String dtInicio = df.format(resultSet.getDate("DTINICIO"));
+			String dtFim = df.format(resultSet.getDate("DTFIM"));
+			listaHistorico.add(new DoadorVoucher(nmCampanha, nmEmpresa, dtInicio, dtFim));			
+		}
+		return listaHistorico;
 	}
 	
 	public Boolean validarVoucher(Request request) throws Exception {
@@ -126,6 +162,21 @@ public class DoadorService extends SQLMetodos<Doador> {
 		        + "INNER JOIN CAMPANHA C ON E.CDCAMPANHA = C.CDCAMPANHA "		
 		        + "WHERE NMVOUCHER = '" + nmVoucher + "' "							
 		        + "AND '" + dtVoucher + "' " + "BETWEEN C.DTINICIO AND C.DTFIM";
+	}
+	
+	private String querySelectHistorico(String cdDoador) {
+		return
+				"SELECT C.NMCAMPANHA, " 
+				+ "E.NMEMPRESA, " 		
+				+ "C.DTINICIO, " 				
+		        + "C.DTFIM "			
+		        + "FROM DOADOR D "
+		        + "INNER JOIN DOADORVOUCHER DV ON D.CDDOADOR = DV.CDDOADOR "
+		        + "INNER JOIN VOUCHER V ON DV.CDVOUCHER = V.CDVOUCHER "
+		        + "INNER JOIN EMPRCAMPANHA EC ON V.PREFVOUCHER = EC.PREFVOUCHER "
+		        + "INNER JOIN EMPRESA E ON EC.CDEMPRESA = E.CDEMPRESA "
+		        + "INNER JOIN CAMPANHA C ON EC.CDCAMPANHA = C.CDCAMPANHA "		
+		        + "WHERE D.CDDOADOR = '" + cdDoador + "' ";							
 	}
 	
 	private Boolean inserirDoadorVoucher(ResultSet resultSet, Integer cdDoador, String dtVoucher) throws Exception {
@@ -162,6 +213,5 @@ public class DoadorService extends SQLMetodos<Doador> {
 		}
 		return atualizado;
 	}
-
 	
 }

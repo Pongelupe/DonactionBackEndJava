@@ -1,51 +1,78 @@
 package sql;
 
-import org.joda.time.DateTime;
+import java.math.BigInteger;
 
 public class EmprCampanha {
 	
-	private Integer cdEmpresa;
-	private Integer cdCampanha;
-	private Integer nmCampanha;
-	private Integer cdVoucher;
-	private DateTime dtParticipacao;
+	private String nmCampanha;
+	private String dsCampanha;
+	private String prefVoucher;
+	private String dtInicio;
+	private String dtFim;
+	private Integer qtdVouchers;
+	private Integer vouchersUsados;
+	private BigInteger vlrInvestimento;
+		
+	public EmprCampanha(String nmCampanha, String dsCampanha, String prefVoucher, String dtInicio, String dtFim, Integer qtdVouchers,
+			Integer vouchersUsados, BigInteger vlrInvestimento) {
+		this.nmCampanha = nmCampanha;
+		this.dsCampanha = dsCampanha;
+		this.prefVoucher = prefVoucher;
+		this.dtInicio = dtInicio;
+		this.dtFim = dtFim;
+		this.qtdVouchers = qtdVouchers;
+		this.vouchersUsados = vouchersUsados;
+		this.vlrInvestimento = vlrInvestimento;
+	}
 	
-	EmprCampanha(Integer cdEmpresa, Integer cdCampanha, Integer nmCampanha, Integer cdVoucher, DateTime dtParticipacao) {
-		setCdEmpresa(cdEmpresa);
-		setCdCampanha(cdCampanha);
-		setNmCampanha(nmCampanha);
-		setCdVoucher(cdVoucher);
-		setDtParticipacao(dtParticipacao);
-	}
-
-	public Integer getCdEmpresa() {
-		return cdEmpresa;
-	}
-	public Integer getCdCampanha() {
-		return cdCampanha;
-	}
-	public Integer getNmCampanha() {
+	public String getNmCampanha() {
 		return nmCampanha;
 	}
-	public Integer getCdVoucher() {
-		return cdVoucher;
+	public String getDsCampanha() {
+		return dsCampanha;
 	}
-	public DateTime getDtParticipacao() {
-		return dtParticipacao;
+	public String getPrefVoucher() {
+		return prefVoucher;
 	}
-	public void setCdEmpresa(Integer cdEmpresa) {
-		this.cdEmpresa = cdEmpresa;
+	public Integer getQtdVouchers() {
+		return qtdVouchers;
 	}
-	public void setCdCampanha(Integer cdCampanha) {
-		this.cdCampanha = cdCampanha;
+	public Integer getVouchersUsados() {
+		return vouchersUsados;
 	}
-	public void setNmCampanha(Integer nmCampanha) {
+	public String getDtInicio() {
+		return dtInicio;
+	}
+	public String getDtFim() {
+		return dtFim;
+	}
+	public BigInteger getVlrInvestimento() {
+		return vlrInvestimento;
+	}
+	public void setDsCampanha(String dsCampanha) {
+		this.dsCampanha = dsCampanha;
+	}
+	public void setNmCampanha(String nmCampanha) {
 		this.nmCampanha = nmCampanha;
 	}
-	public void setCdVoucher(Integer cdVoucher) {
-		this.cdVoucher = cdVoucher;
+	public void setPrefVoucher(String prefVoucher) {
+		this.prefVoucher = prefVoucher;
 	}
-	public void setDtParticipacao(DateTime dtParticipacao) {
-		this.dtParticipacao = dtParticipacao;
+	public void setQtdVouchers(Integer qtdVouchers) {
+		this.qtdVouchers = qtdVouchers;
 	}
+	public void setVouchersUsados(Integer vouchersUsados) {
+		this.vouchersUsados = vouchersUsados;
+	}
+	public void setDtInicio(String dtInicio) {
+		this.dtInicio = dtInicio;
+	}
+	public void setDtFim(String dtFim) {
+		this.dtFim = dtFim;
+	}
+	public void setVlrInvestimento(BigInteger vlrInvestimento) {
+		this.vlrInvestimento = vlrInvestimento;
+	}
+	
+	
 }

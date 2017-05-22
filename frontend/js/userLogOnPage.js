@@ -12,7 +12,7 @@ $("#myForm").submit(function(event){
         var porta = 8080;
         $.ajax({
             type: "POST",
-            url: $(this).attr('action') + ":" + porta + "/cadastrar",
+            url: $(this).attr('action') + ":" + porta + "/cadastrarDoador",
             data: formData,
             success: function(data, textStatus, jqXHR) {
                 swal({

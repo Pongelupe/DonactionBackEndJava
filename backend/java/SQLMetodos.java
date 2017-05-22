@@ -1,5 +1,6 @@
 package sql;
 import java.sql.Connection;
+import org.simpleframework.http.Request;
 
 public abstract class SQLMetodos<T> {
 	private String hostName;
@@ -19,6 +20,14 @@ public abstract class SQLMetodos<T> {
 				hostName, dbName, user, pwd));
 	}
 	
+	public abstract Boolean cadastrar(Request request) throws Exception;
+	
+	public abstract Boolean atualizarCadastro(Request request) throws Exception;
+	
+	public abstract String logar(Request request) throws Exception;
+	
+	public abstract String historico(Request request) throws Exception;
+		
 	public String getHostName() {
 		return hostName;
 	}

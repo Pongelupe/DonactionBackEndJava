@@ -27,7 +27,7 @@ $("#updateData").submit(function(event){
     var formData = SerializedUserData();
     $.ajax({
         type: "POST",
-        url: $(this).attr('action') + ":" + porta + "/atualizarCadastro",
+        url: $(this).attr('action') + ":" + porta + "/atualizarCadastroDoador",
         data: formData,
         success: function(data, textStatus, jqXHR) {
             sweetAlert("Dados Alterados com Sucesso!","","success");      
