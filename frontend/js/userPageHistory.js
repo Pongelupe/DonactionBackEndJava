@@ -55,15 +55,15 @@ $(function(){
 
 $(function() {
 	$("#donaction").on("click", function(){
-	  	var address = 'http://127.0.0.1:8080/campanhasDisponiveis';
+	  	var address = 'http://127.0.0.1:8080/aderirCampanha';
 	  	var userData = JSON.parse(localStorage.getItem("userData"));
-	    var formData = "cidadeEmpresa=Belo Horizonte";
+	    var formData = "cdEmpresa=6&cdCampanha=8&prefVoucher=TST&dtInicio=2017-05-22&qtdMinVoucher=50";
 	    $.ajax({
 	        type: "POST",
 	        url: address,
 	        data: formData,
 	        success: function(data, textStatus, jqXHR) {
-	            console.log(JSON.parse(jqXHR.responseText));
+	            console.log("Deu Bom");
 	        }
 	    });
 	});
