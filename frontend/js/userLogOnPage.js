@@ -13,6 +13,7 @@ $("#myForm").submit(function(event){
         $.ajax({
             type: "POST",
             url: $(this).attr('action') + ":" + porta + "/cadastrarDoador",
+            timeout: 5000,
             data: formData,
             success: function(data, textStatus, jqXHR) {
                 swal({

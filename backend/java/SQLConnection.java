@@ -1,8 +1,7 @@
-package sql;
-import java.sql.Connection;
-import org.simpleframework.http.Request;
 
-public abstract class SQLMetodos<T> {
+import java.sql.Connection;
+
+public abstract class SQLConnection<T> {
 	private String hostName;
 	private String dbName;
 	private String user;
@@ -10,7 +9,7 @@ public abstract class SQLMetodos<T> {
 	private String url;
 	private Connection connection = null;
 
-	SQLMetodos(String hostName, String dbName, String user, String pwd) {
+	SQLConnection(String hostName, String dbName, String user, String pwd) {
 		setHostName(hostName);
 		setDbName(dbName);
 		setUser(user);
@@ -20,14 +19,10 @@ public abstract class SQLMetodos<T> {
 				hostName, dbName, user, pwd));
 	}
 	
-	public abstract Boolean cadastrar(Request request) throws Exception;
+	SQLConnection() {
+		this("donaction", "DonactionDB", "donaction@donaction", "goDonate!");
+	}
 	
-	public abstract Boolean atualizarCadastro(Request request) throws Exception;
-	
-	public abstract String logar(Request request) throws Exception;
-	
-	public abstract String historico(Request request) throws Exception;
-		
 	public String getHostName() {
 		return hostName;
 	}

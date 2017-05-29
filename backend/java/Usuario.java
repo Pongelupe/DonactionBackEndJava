@@ -1,4 +1,3 @@
-package sql;
 
 public abstract class Usuario {
 
@@ -8,14 +7,25 @@ public abstract class Usuario {
 	private String senha;
 	private String cidade;
 	
-	Usuario(Integer id, String nome, String email, String senha, String cidade) {
+	public Usuario(Integer id, String nome, String email, String senha, String cidade) {
 		setId(id);
 		setNome(nome);
 		setEmail(email);
 		setSenha(senha);
 		setCidade(cidade);
 	}
-
+	
+	public Usuario(String nome, String email, String senha, String cidade) {
+		setNome(nome);
+		setEmail(email);
+		setSenha(senha);
+		setCidade(cidade);
+	}
+	
+	public Usuario() {
+		
+	}
+	
 	public Integer getId() {
 		return id;
 	}

@@ -5,6 +5,7 @@ $("#loginForm").submit(function(event){
     $.ajax({
         type: "POST",
         url: $(this).attr('action') + ":" + porta + "/logarDoador",
+        timeout: 5000,
         data: formData,
         success: function(data, textStatus, jqXHR) {
             var userSession = JSON.parse(jqXHR.responseText);

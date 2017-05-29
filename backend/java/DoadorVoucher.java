@@ -1,4 +1,3 @@
-package sql;
 
 public class DoadorVoucher {
 	

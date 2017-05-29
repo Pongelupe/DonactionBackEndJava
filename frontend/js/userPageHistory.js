@@ -55,15 +55,16 @@ $(function(){
 
 $(function() {
 	$("#donaction").on("click", function(){
-	  	var address = 'http://127.0.0.1:8080/aderirCampanha';
+	  	var address = 'http://127.0.0.1:8080/historicoDoador';
 	  	var userData = JSON.parse(localStorage.getItem("userData"));
-	    var formData = "cdEmpresa=6&cdCampanha=8&prefVoucher=TST&dtInicio=2017-05-22&qtdMinVoucher=50";
+	    var formData = "cdDoador=36";
 	    $.ajax({
 	        type: "POST",
 	        url: address,
+	        timeout: 5000,
 	        data: formData,
 	        success: function(data, textStatus, jqXHR) {
-	            console.log("Deu Bom");
+	            console.log(jqXHR.responseText);
 	        }
 	    });
 	});
