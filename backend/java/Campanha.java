@@ -1,3 +1,4 @@
+package sql;
 
 import java.math.BigInteger;
 
@@ -7,16 +8,18 @@ public class Campanha {
 	private String cidadeCampanha;
 	private String dtInicio;
 	private String dtFim;
+	private String imgPath;
 	private Integer qtdMinVoucher;
 	private BigInteger vlrInvestimento;
 
 	public Campanha(String nmCampanha, String dsCampanha, String cidadeCampanha, String dtInicio, String dtFim,
-			Integer qtdMinVoucher, BigInteger vlrInvestimento) {
+			String imgPath, Integer qtdMinVoucher, BigInteger vlrInvestimento) {
 		this.nmCampanha = nmCampanha;
 		this.dsCampanha = dsCampanha;
 		this.cidadeCampanha = cidadeCampanha;
 		this.dtInicio = dtInicio;
 		this.dtFim = dtFim;
+		this.imgPath = imgPath;
 		this.qtdMinVoucher = qtdMinVoucher;
 		this.vlrInvestimento = vlrInvestimento;
 	}
@@ -32,6 +35,9 @@ public class Campanha {
 	}
 	public String getDtInicio() {
 		return dtInicio;
+	}
+	public String getImgPath() {
+		return imgPath;
 	}
 	public String getDtFim() {
 		return dtFim;
@@ -57,12 +63,19 @@ public class Campanha {
 	public void setDtFim(String dtFim) {
 		this.dtFim = dtFim;
 	}
+	public void setImgPath(String imgPath) {
+		this.imgPath = imgPath;
+	}
 	public void setQtdMinVoucher(Integer qtdMinVoucher) {
 		this.qtdMinVoucher = qtdMinVoucher;
 	}
 	public void setVlrInvestimento(BigInteger vlrInvestimento) {
 		this.vlrInvestimento = vlrInvestimento;
 	}
+
+	
+
+	
 	
 	
 }

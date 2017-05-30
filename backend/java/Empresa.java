@@ -1,3 +1,4 @@
+package sql;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
@@ -187,7 +188,7 @@ public class Empresa extends Usuario {
 		return null;
 	}
 	private String querySelectCampanhas(String cidadeEmpresa) {
-		return "SELECT C.DSCAMPANHA, C.DTINICIO, C.DTFIM, C.CIDADECAMPANHA, C.NMCAMPANHA, C.VLRINVESTIMENTO, C.QTDMINVOUCHER "
+		return "SELECT C.DSCAMPANHA, C.DTINICIO, C.DTFIM, C.CIDADECAMPANHA, C.NMCAMPANHA, C.VLRINVESTIMENTO, C.QTDMINVOUCHER, C.IMGPATH "
 				+ "FROM CAMPANHA C " + "INNER JOIN EMPRESA E ON C.CIDADECAMPANHA = E.CIDADEEMPRESA "
 				+ "WHERE DTINICIO BETWEEN CONVERT (date, SYSDATETIME()) AND DTFIM " + "AND CIDADEEMPRESA = '"
 				+ cidadeEmpresa + "'";
@@ -201,9 +202,10 @@ public class Empresa extends Usuario {
 			String cidadeCampanha = resultSet.getString("CIDADECAMPANHA");
 			String dtInicio = df.format(resultSet.getDate("DTINICIO"));
 			String dtFim = df.format(resultSet.getDate("DTFIM"));
+			String imgPath = df.format(resultSet.getDate("IMGPATH"));
 			Integer qtdMinVouchers = new Integer(resultSet.getInt("QTDMINVOUCHER"));
 			BigInteger vlrInvestimento = new BigInteger(resultSet.getString("VLRINVESTIMENTO"));
-			listaCampanhas.add(new Campanha(nmCampanha, dsCampanha, cidadeCampanha, dtInicio, dtFim, qtdMinVouchers,
+			listaCampanhas.add(new Campanha(nmCampanha, dsCampanha, cidadeCampanha, dtInicio, dtFim, imgPath, qtdMinVouchers,
 					vlrInvestimento));
 		}
 		return listaCampanhas;
