@@ -90,8 +90,8 @@
                                         <div class="panel-heading">
                                             <!-- <h3 class="panel-title">Filtro:</h3> -->
                                             <div class="pull-right">
-                                                <span class="clickable filter" data-toggle="tooltip" title="Toggle table filter" data-container="body">
-                                                    <i class="glyphicon glyphicon-filter"></i>
+                                                <span class="clickable filter" data-toggle="tooltip" title="Filtrar tabela de doações" data-container="body">
+                                                    Filtrar<i class="glyphicon glyphicon-filter"></i>
                                                 </span>
                                             </div>
                                         </div>
@@ -101,38 +101,13 @@
                                         <table class="table table-hover" id="dev-table">
                                             <thead>
                                                 <tr>
-                                                    <th>#</th>
                                                     <th>Campanha</th>
                                                     <th>Realizador</th>
-                                                    <th>Dia</th>
+                                                    <th>Data Inicio</th>
+                                                    <th>Data Fim</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>Um Livro Amigo</td>
-                                                    <td>Leitura</td>
-                                                    <td>12/01/2017</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>2</td>
-                                                    <td>Esporte é Para Todos</td>
-                                                    <td>Centauro</td>
-                                                    <td>20/02/2017</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3</td>
-                                                    <td>Nerd Também Doa</td>
-                                                    <td>NerdStore</td>
-                                                    <td>05/03/2017</td>
-                                                </tr>
-                                                 <tr>
-                                                    <td>4</td>
-                                                    <td>Leva a Galera para Doar</td>
-                                                    <td>Cabify</td>
-                                                    <td>07/05/2017</td>
-                                                </tr>
-                                            </tbody>
+                                            <tbody></tbody>
                                         </table>
                                     </div>
                                 </p>
@@ -193,7 +168,7 @@
                                     Mandou Bem!
                                 </h3>
                                 <p class="narrow text-center">
-                                    Com a sua ajuda, vidas foram salvas 
+                                    Com a sua ajuda, vidas foram salvas
                                 </p>
                             </div>
                             <div class="clearfix">

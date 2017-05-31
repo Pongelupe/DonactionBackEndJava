@@ -1,24 +1,20 @@
 //Histórico de Doações
-$(function() {
-    $('a[title]').tooltip();
-});
+$(function(){
+	'use strict';
 
-(function(){
-    'use strict';
-	var $ = jQuery;
 	$.fn.extend({
 		filterTable: function(){
 			return this.each(function(){
 				$(this).on('keyup', function(e){
 					$('.filterTable_no_results').remove();
-					var $this = $(this), 
-                        search = $this.val().toLowerCase(), 
-                        target = $this.attr('data-filters'), 
-                        $target = $(target), 
+					var $this = $(this),
+                        search = $this.val().toLowerCase(),
+                        target = $this.attr('data-filters'),
+                        $target = $(target),
                         $rows = $target.find('tbody tr');
-                        
+
 					if(search == '') {
-						$rows.show(); 
+						$rows.show();
 					} else {
 						$rows.each(function(){
 							var $this = $(this);
@@ -34,38 +30,50 @@ $(function() {
 			});
 		}
 	});
-	$('[data-action="filter"]').filterTable();
-})(jQuery);
 
-$(function(){
-    // attach table filter plugin to inputs
+	// attach table filter plugin to inputs
 	$('[data-action="filter"]').filterTable();
-	
+	$('a[title]').tooltip();
+	$('[data-toggle="tooltip"]').tooltip();
+
 	$('.container').on('click', '.panel-heading span.filter', function(e){
-		var $this = $(this), 
+		var $this = $(this),
 			$panel = $this.parents('.panel');
-		
+
 		$panel.find('.panel-body').slideToggle();
 		if($this.css('display') != 'none') {
 			$panel.find('.panel-body input').focus();
 		}
 	});
-	$('[data-toggle="tooltip"]').tooltip();
-});
 
-$(function() {
-	$("#donaction").on("click", function(){
+	$("#donaction").on("click", function() {
+		var donationsTable = $('#dev-table');
 	  	var address = 'http://127.0.0.1:8080/historicoDoador';
 	  	var userData = JSON.parse(localStorage.getItem("userData"));
-	    var formData = "cdDoador=36";
-	    $.ajax({
-	        type: "POST",
-	        url: address,
-	        timeout: 5000,
-	        data: formData,
-	        success: function(data, textStatus, jqXHR) {
-	            console.log(jqXHR.responseText);
-	        }
-	    });
+	  	if (userData) {
+		    var formData = "cdDoador=" + userData.id;
+		    $.ajax({
+		        type: "POST",
+		        url: address,
+		        data: formData,
+		        success: function(data, textStatus, jqXHR) {
+		            var donationTableBody = '';
+				  	data.forEach(function(row) {
+				  		donationTableBody += '<tr>';
+				  		donationTableBody += '<td>' + row.nmCampanha + '</td>';
+				  		donationTableBody += '<td>' + row.nmEmpresa + '</td>';
+				  		donationTableBody += '<td>' + row.dtInicio + '</td>';
+				  		donationTableBody += '<td>' + row.dtFim + '</td>';
+				  		donationTableBody += '</tr>';
+				  	});
+			  		donationsTable.find('tbody').html(donationTableBody);
+		        },
+		        error: function(err) {
+		        	donationsTable.html('<h3 style="text-align:center; padding:20px">Não foram encontradas campanhas :(</h3>');
+		        }
+		    });
+	  	} else {
+	  		donationsTable.html('<h3 style="text-align:center; padding:20px">Erro ao carregar dados do usuário. Tente novamente mais tarde.</h3>');
+	  	}
 	});
 });
